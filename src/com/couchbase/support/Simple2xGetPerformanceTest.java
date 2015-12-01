@@ -35,6 +35,10 @@ public class Simple2xGetPerformanceTest {
 		int iteration = 0;
 		int nullCount = 0;
 		
+		long startTime = System.currentTimeMillis();
+		long timeNow = 0;
+		long elapsedTimeSinceStart = 0;
+		
 		boolean keepGoing = true;
 		while (keepGoing) {
 			
@@ -53,9 +57,17 @@ public class Simple2xGetPerformanceTest {
 			
 			iteration++;
 		
-			if ((iteration % 100) == 0) { 
-				System.out.printf("Iteration: %5d Success: %5d Nulls: %5d Failures: %5d\n", iteration, successCount, nullCount, exceptionCount);
+			if ((iteration % 1000) == 0) { 
+				
+				timeNow = System.currentTimeMillis();
+				elapsedTimeSinceStart = timeNow - startTime;
+				float averageIterationsPerSecond = ((float) iteration / (float) elapsedTimeSinceStart) * 1000;
+
+				System.out.printf("Iteration: %6d Success: %6d Nulls: %6d Failures: %6d IPS: %7.1f Elapsed: %6d ms\n", 
+						iteration, successCount, nullCount, exceptionCount, averageIterationsPerSecond, elapsedTimeSinceStart);
 			}
+		
+			
 			
 		} // main while loop
 		
